@@ -4,7 +4,7 @@ from utils import *
 
 data_dir = "./test_data_processed"
 seq_txt_path = os.path.join(data_dir, "data_list.txt")
-save_pt_path = os.path.join(data_dir, "ESM_features.pt)
+save_pt_path = os.path.join(data_dir, "ESM_features.pt")
 
 torch.cuda.set_device(1)
 
