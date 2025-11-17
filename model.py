@@ -215,7 +215,7 @@ class SaSPNet(nn.Module):
         group_info = group_info.long().to(self.device) # shape: (batch_size, 70, 4)
         plm_features = plm_features.to(torch.float).to(self.device)
 	
-	# embedding layer
+	    # embedding layer
         seq_embedding = self.embedding_layer(seq_indices).to(self.device)  # output shape: (batch_size, 70, embedding_dim=20)
         seq_embedding = torch.cat((seq_embedding, group_info), dim=2).to(self.device)  # shape: (batch_size, 70, 24)
 
