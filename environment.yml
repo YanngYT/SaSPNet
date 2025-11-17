@@ -1,0 +1,26 @@
+name: saspnet
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pytorch=1.13.1
+  - pytorch-cuda=11.7
+  - torchaudio=0.13.1
+  - torchvision=0.14.1
+  - numpy=1.22
+  - pandas
+  - matplotlib
+  - scipy
+  - scikit-learn
+  - transformers
+  - biopython
+  - pip
+  - pip:
+    - torch-geometric==2.6.1
+    - beautifulsoup4
+    - rdkit-pypi
+    - tqdm
+    - gdown
