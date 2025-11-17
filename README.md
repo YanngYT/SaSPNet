@@ -118,4 +118,4 @@ Modify these fields inside the script before running:
 - `save_path`: output directory for prediction results
 - `device`: computation device (e.g., `torch.device("cuda:1")`)
 
-The predictions (signal peptide type and cleavage site positions) will be saved in CSV format.
+The predictions (signal peptide type and cleavage sites) will be saved in CSV format.
