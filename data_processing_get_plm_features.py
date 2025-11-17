@@ -2,8 +2,10 @@ import os
 import torch
 from utils import *
 
-seq_txt_path = "./test_data_processed/data_list.txt"
-save_pt_path = "./test_data_processed/ESM_features.pt"
+data_dir = "./test_data_processed"
+seq_txt_path = os.path.join(data_dir, "data_list.txt")
+save_pt_path = os.path.join(data_dir, "ESM_features.pt)
+
 torch.cuda.set_device(1)
 
 def sequences_txt_to_esm_pt():

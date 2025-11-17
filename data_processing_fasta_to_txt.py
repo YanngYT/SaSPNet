@@ -1,10 +1,11 @@
 import os
 
 fasta_path = "./data/test_set.fasta"
-seq_out_path = "./test_data_processed/data_list.txt"
-kingdom_out_path = "./test_data_processed/kingdom_list.txt"
-target_out_path = "./test_data_processed/target_list.txt"
-aa_out_path = "./test_data_processed/aa_list.txt"
+data_dir = "./test_data_processed"
+seq_out_path = os.path.join(data_dir, "data_list.txt")
+kingdom_out_path = os.path.join(data_dir, "kingdom_list.txt")
+target_out_path = os.path.join(data_dir, "target_list.txt")
+aa_out_path = os.path.join(data_dir, "aa_list.txt")
 
 def parse_fasta_and_save():
     os.makedirs(os.path.dirname(seq_out_path), exist_ok=True)

@@ -1,10 +1,27 @@
 import torch as torch
 import numpy as np
 import pandas as pd
+import os
 from utils import *
 from model import SaSPNet
 
+
 device = torch.device("cuda:1")
+
+data_dir = "./test_data_processed"
+
+filename_list = ["data_list.txt",
+                 "kingdom_list.txt",
+                 "ESM_features.pt",
+                 "ESMFold_adj_matrices",
+                 "target_list.txt",
+                 "aa_list.txt"
+                 ]
+for i in range(len(filename_list)):
+    filename_list[i] = os.path.join(data_dir, filename_list[i])
+
+save_path = "results.csv"
+
 
 def createEvalData(data_path, kingdom_path, PLM_feature_path, struc_path, label_path, site_path) :
     data_list = []
@@ -18,8 +35,6 @@ def createEvalData(data_path, kingdom_path, PLM_feature_path, struc_path, label_
     with open(kingdom_path, 'r') as kingdom_file:
         for line in kingdom_file:
             kingdom_list.append(np.eye(len(kingdom_dic.keys()))[kingdom_dic[line.strip('\n\t')]])
-    data_file.close()
-    kingdom_file.close()
 
     if os.path.exists(PLM_feature_path):
         plm_feature = torch.load(PLM_feature_path)
@@ -30,7 +45,6 @@ def createEvalData(data_path, kingdom_path, PLM_feature_path, struc_path, label_
         for line in label_file:
             str = np.array(trans_label(line.strip('\n')[0:70]))
             label_list.append(str)
-    label_file.close()
 
     data = np.array(data_list)
     kingdoms = np.array(kingdom_list)
@@ -46,7 +60,6 @@ def createEvalData(data_path, kingdom_path, PLM_feature_path, struc_path, label_
     with open(site_path, 'r') as aa_file:
         for line in aa_file:
             aa_list.append(classes_sequence_from_ann_sequence(line.strip("\n\t")))
-    aa_file.close()
     aas = np.array(aa_list)
     site_labels = torch.tensor(aas)
 
@@ -57,8 +70,6 @@ def trans_output(idx):
 
 
 if __name__ == '__main__':
-    data_dir = 'test_data_processed'
-
     model_path = "./model_pth/SaSPNet.pth"
     model = SaSPNet(device)
     model.load_state_dict(torch.load(model_path))
@@ -68,17 +79,7 @@ if __name__ == '__main__':
 
     if isinstance(model, torch.nn.DataParallel):
         model = model.module
-    model.eval()
 
-    filename_list = ["data_list.txt",
-                     "kingdom_list.txt",
-                     "ESM_features.pt",
-                     "ESMFold_adj_matrices",
-                     "target_list.txt",
-                     "aa_list.txt"
-                     ]
-    for i in range(len(filename_list)):
-        filename_list[i] = os.path.join(data_dir, filename_list[i])
     seq, struc, plm_feature, labels, site_labels = createEvalData(data_path=filename_list[0],
                             kingdom_path=filename_list[1],
                             PLM_feature_path=filename_list[2],
@@ -131,6 +132,5 @@ if __name__ == '__main__':
         "predicted_cleavage": predicted_cleavages,
     })
 
-    save_path = "results.csv"
     df.to_csv(save_path, index=False)
     print("Prediction saved to:", save_path)
