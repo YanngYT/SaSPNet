@@ -65,7 +65,7 @@ python data_processing_get_plm_features.py
 ```
 
 Remember to modify `data_dir` in this script to the directory containing the txt files before running.
-The extracted ESM-2 features will be saved as a`.pt` file in the same directory.
+The extracted ESM-2 features will be saved as a `.pt` file in the same directory.
 
 ### Step 4: Generate 3D structures using ESMFold or other tools
 
