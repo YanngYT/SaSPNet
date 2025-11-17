@@ -69,6 +69,7 @@ def trans_output(idx):
     return dic2[int(idx)]
 
 
+
 if __name__ == '__main__':
     model_path = "./model_pth/SaSPNet.pth"
     model = SaSPNet(device)
@@ -131,6 +132,5 @@ if __name__ == '__main__':
         "predicted_type": predicted_types,
         "predicted_cleavage": predicted_cleavages,
     })
-
     df.to_csv(save_path, index=False)
     print("Prediction saved to:", save_path)
